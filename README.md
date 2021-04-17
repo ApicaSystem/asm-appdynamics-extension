@@ -98,9 +98,11 @@ Monitor.xml also contains optional proxy setting parameters. They are used if yo
 ## AppDynamics Metrics per check
 
 **value**
+
 The value of the check. Often the total response time. Can sometimes be mapped to another thing
 
 **status**
+
 A code for the severity. Need to use code due to that AppDynamics metrics must be numeric values.
 * 0 = Fatal or Unknown (F,U)
 * 1 = Error (E)
@@ -108,6 +110,7 @@ A code for the severity. Need to use code due to that AppDynamics metrics must b
 * 3 = Information (I)
 
 **sla_fulfillment**
+
 A calculation of the SLA fulfillment from the check result
 sla_percent_current_month/target_sla * 100 rounded to integer. It means that it can contain a value > 100. Exact on target will produce 100.
 
