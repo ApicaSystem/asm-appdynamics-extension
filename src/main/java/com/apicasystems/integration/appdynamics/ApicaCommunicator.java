@@ -56,7 +56,7 @@ public class ApicaCommunicator {
         String message = statusCode.toString() + " : " + response.getStatusLine().getReasonPhrase();
         throw new org.apache.http.HttpException(message);
       }
-      String tagName =  this.taskArguments.get("TagName");
+      String tagName =  this.taskArguments.getOrDefault("TagName","");
       HttpEntity entity = response.getEntity();
       // read http response
       String result = IOUtils.toString(entity.getContent(), "UTF-8");
@@ -96,7 +96,7 @@ public class ApicaCommunicator {
           // DEBUG: System.out.println("checkId: " + checkId + ", fetchedTimeStamp: " +
           // fetchedTimeStamp +" differed from previous: " + previousTimeStamp);
           String tagValue = null;
-          if (tagName != null && json.containsKey("tags")) {
+          if (!tagName.isEmpty() && json.containsKey("tags")) {
             @SuppressWarnings("unchecked")
             LinkedHashMap<String, LinkedList> tags =
                 (LinkedHashMap<String, LinkedList>) json.get("tags");
@@ -105,7 +105,7 @@ public class ApicaCommunicator {
               if (values != null && values.size() > 0)
                 tagValue = values.get(0).toString();
             }
-            if (tagValue == null)
+            if (tagValue == null || tagValue.isEmpty())
               continue;
           }
           CheckResultHashMapHelper.AddOrUpdate(checkResultTimeStamps, checkId,
@@ -116,7 +116,7 @@ public class ApicaCommunicator {
           // String metricName = "Checks|" + json.get("name") + " (" + checkId.toString() + ")" +
           // "|";
           String metricName = "Checks|";
-          if (tagValue != null)
+          if (tagValue != null && !tagValue.isEmpty())
             metricName += tagValue + "|";
           metricName += json.get("name") + " (" + location + ")" + "|";
           // VALUE
@@ -184,17 +184,17 @@ public class ApicaCommunicator {
     }
   }
   
-  @SuppressWarnings("deprecation")
+ 
   private HttpClient getHttpClient() {
-    // HttpClient httpclient = new DefaultHttpClient();
+    
     HttpClientBuilder builder=HttpClientBuilder.create();
-    String proxyHost = this.taskArguments.get("ProxyHost");
-    String proxyPort = this.taskArguments.get("ProxyPort");
+    String proxyHost = this.taskArguments.getOrDefault("ProxyHost","");
+    String proxyPort = this.taskArguments.getOrDefault("ProxyPort","");
    
-    if (proxyHost != null && proxyPort != null) {
-      String proxyScheme =this.taskArguments.get("ProxyScheme"); 
-      if(proxyScheme == null )
-        proxyScheme = HttpHost.DEFAULT_SCHEME_NAME;
+   
+    if (!proxyHost.isEmpty() && !proxyPort.isEmpty()) {
+      String proxyScheme =this.taskArguments.getOrDefault("ProxyScheme",HttpHost.DEFAULT_SCHEME_NAME); 
+     
       
       int port = Integer.parseInt(proxyPort);
       HttpHost proxy = new HttpHost(proxyHost, port, proxyScheme);

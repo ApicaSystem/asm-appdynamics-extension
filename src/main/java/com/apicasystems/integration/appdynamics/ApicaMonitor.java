@@ -86,6 +86,7 @@ public class ApicaMonitor extends AManagedMonitor {
     taskArgs.put("BaseApiUrl", baseApiUrl);
     if (tagName != null)
       taskArgs.put("TagName", tagName);
+    taskArgs.put("ProxyHost","");
     try {
       pm.execute(taskArgs, null);
     } catch (TaskExecutionException ex) {

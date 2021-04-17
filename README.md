@@ -26,7 +26,7 @@ Installation
 2. Set the required values in monitor.xml
 3. Start the Machine Agent and it will scan the /Monitor/ folder and execute the Jar file with arguments it finds in monitor.xml
 4. Observe the MachineAgent/Log/agent.log
-5. Metrics should be popping up in the Metric Browser inside of AppDynamics for the application associated to the machine agent. 
+5. Metrics should be popping up in the Metric Browser inside of AppDynamics for the application associated to the machine agent. If no AppDynamics application is associated to the machine agent, the custom metrics from ASM will be under custom metrics for the server.
 
 Notes (testing jar)
 -------------------
@@ -39,10 +39,10 @@ Notes (testing jar)
 
 **BaseApiUrl** - The base URL for Apica ASM API
 
-**TagName** - Tag name used for filtering and grouping of checks. This parameter is optional, but we encourage you to use it. Use a tag like 'Application' or 'Business Service' for grouping the checks
+**TagName** - Tag name used for filtering and grouping of checks. This parameter is optional, but we encourage you to use it. Use a tag like 'Application' or 'Business Service' for grouping the checks. If this parameter is set only checks with a tag name matching the parameter will be in the result and the tag value will be used as first item in the metrics path.
 
 **Proxy settings**
-Monitor.xml also contains optional proxy setting parameters. They are used if need a proxy for the https connection to Apica ASM API end-point. 
+Monitor.xml also contains optional proxy setting parameters. They are used if you need a proxy for the https connection to Apica ASM API end-point. 
 
 ``` 
 <monitor>
