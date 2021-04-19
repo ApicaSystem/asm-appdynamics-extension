@@ -12,7 +12,7 @@
 		<description>Apica Monitor Task</description>
 		<type>java</type>
 		<java-task>
-			<classpath>apicaAppdynamicsMetrics-2.0-full.jar</classpath>
+			<classpath>apicaAppdynamicsMetrics-2.1.jar</classpath>
 			<impl-class>com.apicasystems.integration.appdynamics.ApicaMonitor
 			</impl-class>
 		</java-task>
